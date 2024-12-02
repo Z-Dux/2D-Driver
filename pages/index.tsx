@@ -1,142 +1,27 @@
-// pages/index.js
+// pages/index.tsx
+import { useState } from "react";
+import PhysicsSimulator from "@/components/physics";
+import BodyForm from "@/components/body";
 
-import { useEffect, useRef, useState } from "react";
-import Matter from "matter-js";
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+const Home = () => {
+  const [newBody, setNewBody] = useState(null);
 
-const HomePage = () => {
-  const sceneRef = useRef(null);
-  const engineRef = useRef(null);
-  const [bodies, setBodies] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    color: "#000000",
-    radius: 20,
-    mass: 1,
-    velocityX: 0,
-    velocityY: 0,
-  });
-
-  useEffect(() => {
-    const { Engine, Render, World } = Matter;
-    const engine = Engine.create();
-    engine.gravity.y = 1; // Gravity towards down
-    engineRef.current = engine;
-
-    const render = Render.create({
-      element: sceneRef.current,
-      engine: engine,
-      options: {
-        width: 800,
-        height: 600,
-        wireframes: false,
-        background: "#000000",
-      },
-    });
-
-    Render.run(render);
-    Engine.run(engine);
-
-    return () => {
-      Render.stop(render);
-      Engine.clear(engine);
-    };
-  }, []);
-
-  const addBody = (e) => {
-    e.preventDefault();
-    const { World, Bodies } = Matter;
-    const { name, color, radius, mass, velocityX, velocityY } = formData;
-    const engine = engineRef.current;
-
-    const body = Bodies.circle(400, 200, radius, {
-      label: name,
-      render: { fillStyle: color },
-      mass: mass,
-    });
-
-    Matter.Body.setVelocity(body, { x: velocityX, y: velocityY });
-
-    World.add(engine.world, body);
-    setBodies([...bodies, body]);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleAddBody = (body:any) => {
+    setNewBody(body);
   };
 
   return (
-    <div style={{ display: "flex", height: "100vh", backgroundColor: "#000000", color: "#ffffff" }}>
-      <div ref={sceneRef} style={{ width: "70%", backgroundColor: "#000000" }} />
-      <div style={{ width: "30%", padding: "20px", background: "#333333", borderLeft: "1px solid #444444" }}>
-        <form onSubmit={addBody}>
-          <Label htmlFor="name" style={{ color: "#ffffff" }}>Name</Label>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Name"
-            required
-          />
-          <Label htmlFor="color" style={{ color: "#ffffff" }}>Color</Label>
-          <Input
-            type="color"
-            id="color"
-            name="color"
-            value={formData.color}
-            onChange={handleChange}
-            required
-          />
-          <Label htmlFor="radius" style={{ color: "#ffffff" }}>Radius</Label>
-          <Input
-            type="number"
-            id="radius"
-            name="radius"
-            value={formData.radius}
-            onChange={handleChange}
-            placeholder="Radius"
-            required
-          />
-          <Label htmlFor="mass" style={{ color: "#ffffff" }}>Mass</Label>
-          <Input
-            type="number"
-            id="mass"
-            name="mass"
-            value={formData.mass}
-            onChange={handleChange}
-            placeholder="Mass"
-            required
-          />
-          <Label htmlFor="velocityX" style={{ color: "#ffffff" }}>Velocity X</Label>
-          <Input
-            type="number"
-            id="velocityX"
-            name="velocityX"
-            value={formData.velocityX}
-            onChange={handleChange}
-            placeholder="Velocity X"
-            required
-          />
-          <Label htmlFor="velocityY" style={{ color: "#ffffff" }}>Velocity Y</Label>
-          <Input
-            type="number"
-            id="velocityY"
-            name="velocityY"
-            value={formData.velocityY}
-            onChange={handleChange}
-            placeholder="Velocity Y"
-            required
-          />
-          <Button type="submit" style={{ backgroundColor: "#555555", color: "#ffffff" }}>Add Body</Button>
-        </form>
+    <main className="flex flex-row gap-8 p-8 bg-gray-900 text-white min-h-screen">
+      <div className="flex-1">
+        <h1 className="text-2xl font-bold mb-4">2D Physics Simulator</h1>
+        <PhysicsSimulator newBody={newBody} />
       </div>
-    </div>
+      <div className="w-1/3 bg-gray-800 p-4 rounded shadow-lg">
+        <h2 className="text-xl font-semibold mb-4">Create a New Body</h2>
+        <BodyForm onAddBody={handleAddBody} />
+      </div>
+    </main>
   );
 };
 
-export default HomePage;
+export default Home;
