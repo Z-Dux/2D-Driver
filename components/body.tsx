@@ -17,7 +17,7 @@ interface BodyFormProps {
 }
 
 export default function BodyForm({ onAddBody }: BodyFormProps) {
-  const [color, setColor] = useState("#ff0000")
+  const [color, setColor] = useState("#5716a7")
   const [mass, setMass] = useState(1)
   const [radius, setRadius] = useState(30)
   const [velocityX, setVelocityX] = useState(0)
@@ -29,9 +29,9 @@ export default function BodyForm({ onAddBody }: BodyFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-gray-900 p-6 rounded-lg shadow-lg">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-neutral-800 p-6 rounded-lg shadow-lg">
       <div className="space-y-2">
-        <Label htmlFor="color" className="text-gray-300">
+        <Label htmlFor="color" className="text-neutral-300">
           Color
         </Label>
         <div className="flex items-center space-x-2">
@@ -40,18 +40,18 @@ export default function BodyForm({ onAddBody }: BodyFormProps) {
             id="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
-            className="w-12 h-12 p-1 bg-gray-800 border-gray-700"
+            className="w-12 h-12 p-1 bg-neutral-800 border-neutral-700"
           />
           <Input
             type="text"
             value={color}
             onChange={(e) => setColor(e.target.value)}
-            className="flex-grow bg-gray-800 text-gray-300 border-gray-700"
+            className="flex-grow bg-neutral-800 text-neutral-300 border-neutral-700"
           />
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="mass" className="text-gray-300">
+        <Label htmlFor="mass" className="text-neutral-300">
           Mass: {mass}
         </Label>
         <Slider
@@ -65,7 +65,7 @@ export default function BodyForm({ onAddBody }: BodyFormProps) {
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="radius" className="text-gray-300">
+        <Label htmlFor="radius" className="text-neutral-300">
           Radius: {radius}
         </Label>
         <Slider
@@ -78,7 +78,7 @@ export default function BodyForm({ onAddBody }: BodyFormProps) {
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="velocityX" className="text-gray-300">
+        <Label htmlFor="velocityX" className="text-neutral-300">
           Velocity X: {velocityX}
         </Label>
         <Slider
@@ -91,7 +91,7 @@ export default function BodyForm({ onAddBody }: BodyFormProps) {
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="velocityY" className="text-gray-300">
+        <Label htmlFor="velocityY" className="text-neutral-300">
           Velocity Y: {velocityY}
         </Label>
         <Slider

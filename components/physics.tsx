@@ -23,7 +23,7 @@ const PhysicsSimulator = ({ newBody }: { newBody?: BodyConfig | null }) => {
         width: 800,
         height: 600,
         wireframes: false,
-        background: "#1e293b",
+        background: "#232423",
       },
     });
 
@@ -35,7 +35,7 @@ const PhysicsSimulator = ({ newBody }: { newBody?: BodyConfig | null }) => {
       Bodies.rectangle(800, 300, 50, 600, { isStatic: true }), // Right
     ];
     boundaries.forEach((boundary) => {
-      boundary.render.fillStyle = "#4b5563";
+      boundary.render.fillStyle = "#0f0f0f";
     });
 
     World.add(world, boundaries);
@@ -80,7 +80,7 @@ const PhysicsSimulator = ({ newBody }: { newBody?: BodyConfig | null }) => {
     }
   }, [newBody, world]);
 
-  return <div ref={sceneRef}></div>;
+  return <div className="rounded-md" ref={sceneRef}></div>;
 };
 
 export default PhysicsSimulator;
